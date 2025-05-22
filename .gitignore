@@ -1,0 +1,42 @@
+# Godot specific temporary/cache files (unlikely for a plugin, but good practice)
+.godot/
+*.import/ # If the plugin generates its own .import files and you don't want to track them.
+          # For most plugins, you DO want to track .import files. Keep this commented unless you have a specific reason.
+
+# OS generated files
+.DS_Store # macOS
+Thumbs.db # Windows
+desktop.ini # Windows
+
+# Backup and temporary files from various editors/tools
+*.bak
+*~
+*.orig
+*.swp
+*.log
+*.tmp
+*.temp
+*.uid
+fps.gd
+node_3d.gd
+*.tscn
+grid.gd
+icon.svg
+icon.svg.import
+project.godot
+export_presets.cfg
+.editorconfig
+
+# IDE / Editor specific files (if you use them inside the plugin folder)
+.vscode/ # VS Code
+.idea/   # JetBrains IDEs (e.g., Rider, IntelliJ)
+
+# Executables / Builds (if you were to build something inside the plugin folder)
+*.exe
+*.dll
+*.so
+*.dylib
+*.apk
+*.zip
+*.rar
+*.7z
