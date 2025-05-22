@@ -21,7 +21,8 @@ func _init_buffer() -> void:
 	if not _debug_mode:
 		return
 	
-	_buffer = Buffer.new("DD3D Buffer", 512)
+	var buffer_size: int = ProjectSettings.get_setting("addons/DrawDebug/buffer_size")
+	_buffer = Buffer.new("DD3D Buffer", buffer_size)
 	add_child(_buffer)
 	
 	for i in range(_buffer.get_buffer_size()):
