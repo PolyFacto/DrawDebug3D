@@ -31,6 +31,7 @@ func _init_buffer() -> void:
 		_mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		_mesh_instance.visibility_range_end = 0.0
 		_mesh_instance.process_mode = Node.PROCESS_MODE_DISABLED
+		_mesh_instance.visibility_range_end = 50.0 # TODO : Project Settings ?
 		_buffer.add_instance(i, _mesh_instance)
 
 func _process(_delta: float) -> void:
