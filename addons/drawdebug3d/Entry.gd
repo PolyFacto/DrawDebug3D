@@ -36,4 +36,4 @@ func _disable_plugin():
 	remove_autoload_singleton(AUTOLOAD_NAME)
 
 func _save_config() -> void:
-	ProjectSettings.save_custom("addons/drawdebug3d/save/override.cfg")
+	ProjectSettings.save()
