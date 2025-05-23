@@ -8,6 +8,7 @@ A lightweight Godot plugin for rendering 3D debug primitives during development.
 
 - ✅ **Basic Primitives**:
   - Line
+  - Lines
   - Box Line
   - Dot
   - Box
