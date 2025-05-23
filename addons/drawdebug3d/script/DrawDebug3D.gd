@@ -25,13 +25,15 @@ func _init_buffer() -> void:
 	_buffer = Buffer.new("DD3D Buffer", buffer_size)
 	add_child(_buffer)
 	
+	var instance_visibility_range: int = ProjectSettings.get_setting("addons/DrawDebug/instance_visibility_range")
+	
 	for i in range(_buffer.get_buffer_size()):
 		var _mesh_instance: MeshInstance3D = MeshInstance3D.new()
 		_mesh_instance.gi_mode = GeometryInstance3D.GI_MODE_DISABLED
 		_mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		_mesh_instance.visibility_range_end = 0.0
 		_mesh_instance.process_mode = Node.PROCESS_MODE_DISABLED
-		_mesh_instance.visibility_range_end = 50.0 # TODO : Project Settings ?
+		_mesh_instance.visibility_range_end = instance_visibility_range
 		_buffer.add_instance(i, _mesh_instance)
 
 func _process(_delta: float) -> void:
@@ -432,6 +434,7 @@ func grid(data: PrimitiveGridData) -> void:
 	_im.surface_end()
 	
 	var _mesh_instance: MeshInstance3D = _set_mesh(_buffer_instance.object, _im, data.origin, data.rotation, data.color)
+	_mesh_instance.visibility_range_end = 0.0
 	_set_debug_data(_buffer_instance.uid, _mesh_instance, data.lifetime)
 
 func cross(data: PrimitiveCrossData) -> void:
