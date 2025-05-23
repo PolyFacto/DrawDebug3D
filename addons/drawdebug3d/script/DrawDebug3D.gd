@@ -204,6 +204,82 @@ func box(data: PrimitiveBoxData) -> void:
 	var _mesh_instance: MeshInstance3D = _set_mesh(_buffer_instance.object, _im, data.position, data.rotation, data.color)
 	_set_debug_data(_buffer_instance.uid, _mesh_instance, data.lifetime)
 
+func capsule(data: PrimitiveCapsuleData) -> void:
+	if not _debug_mode:
+		return
+	
+	var _buffer_instance: BufferData = _buffer.get_instance()
+	if not _buffer_instance: 
+		printerr("No buffer instance available")
+		return
+	
+	var _im: ImmediateMesh = ImmediateMesh.new()
+	_im.surface_begin(Mesh.PRIMITIVE_LINES)
+	
+	var half_height: float = data.height * 0.5
+	var angle_step: float = TAU / data.segments
+	var ring_step: float = PI * 0.5 / data.rings
+	
+	for i in range(data.segments):
+		var angle: float = i * angle_step
+		var x: float = cos(angle) * data.radius
+		var z: float = sin(angle) * data.radius
+		var top: Vector3 = Vector3(x, half_height, z)
+		var bottom: Vector3 = Vector3(x, -half_height, z)
+	
+		_im.surface_add_vertex(top)
+		_im.surface_add_vertex(bottom)
+	
+	for y in [-half_height, half_height]:
+		for i in range(data.segments):
+			var angle_a: float = i * angle_step
+			var angle_b: float = (i + 1) % data.segments * angle_step
+			var p1: Vector3 = Vector3(cos(angle_a) * data.radius, y, sin(angle_a) * data.radius)
+			var p2: Vector3 = Vector3(cos(angle_b) * data.radius, y, sin(angle_b) * data.radius)
+	
+			_im.surface_add_vertex(p1)
+			_im.surface_add_vertex(p2)
+	
+	for h in [-1, 1]:
+		for i in range(data.segments):
+			var angle: float = i * angle_step
+			var dir: Vector3 = Vector3(cos(angle), 0, sin(angle))
+			for j in range(data.rings):
+				var theta0: float = j * ring_step
+				var theta1: float = (j + 1) * ring_step
+				
+				var y0: float = cos(theta0) * data.radius * h
+				var r0: float = sin(theta0) * data.radius
+				var y1: float = cos(theta1) * data.radius * h
+				var r1: float = sin(theta1) * data.radius
+				
+				var p1: Vector3 = dir * r0 + Vector3(0, y0 + half_height * h, 0)
+				var p2: Vector3 = dir * r1 + Vector3(0, y1 + half_height * h, 0)
+				
+				_im.surface_add_vertex(p1)
+				_im.surface_add_vertex(p2)
+	
+	for h in [-1, 1]:
+		for j in range(1, data.rings + 1):
+			var theta: float = j * ring_step
+			var y: float = cos(theta) * data.radius * h + half_height * h
+			var r: float = sin(theta) * data.radius
+			
+			for i in range(data.segments):
+				var angle_a: float = i * angle_step
+				var angle_b: float = (i + 1) % data.segments * angle_step
+				var p1: Vector3 = Vector3(cos(angle_a) * r, y, sin(angle_a) * r)
+				var p2: Vector3 = Vector3(cos(angle_b) * r, y, sin(angle_b) * r)
+				
+				_im.surface_add_vertex(p1)
+				_im.surface_add_vertex(p2)
+	
+	_im.surface_set_color(data.color)
+	_im.surface_end()
+	
+	var _mesh_instance: MeshInstance3D = _set_mesh(_buffer_instance.object, _im, data.position, data.rotation, data.color)
+	_set_debug_data(_buffer_instance.uid, _mesh_instance, data.lifetime)
+
 func cylinder(data: PrimitiveCylinderData) -> void:
 	if not _debug_mode:
 		return
