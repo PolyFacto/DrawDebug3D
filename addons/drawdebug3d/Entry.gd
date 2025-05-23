@@ -11,11 +11,10 @@ func _enable_plugin():
 			"name": "addons/DrawDebug/buffer_size",
 			"type": TYPE_INT,
 			"hint": PROPERTY_HINT_RANGE,
-			"hint_string": "128, 2048, 64",
-			"usage": PROPERTY_USAGE_DEFAULT,
+			"hint_string": "128,2048,1",
 		})
 		
-		ProjectSettings.save()
+		_save_config()
 	
 	if not ProjectSettings.has_setting("addons/DrawDebug/instance_visibility_range"):
 		ProjectSettings.set("addons/DrawDebug/instance_visibility_range", 0.0)
@@ -24,15 +23,17 @@ func _enable_plugin():
 			"name": "addons/DrawDebug/instance_visibility_range",
 			"type": TYPE_FLOAT,
 			"hint": PROPERTY_HINT_RANGE,
-			"hint_string": "0.0, 2048.0, 1.0",
-			"usage": PROPERTY_USAGE_DEFAULT,
+			"hint_string": "0.0,2048.0,1.0",
 		})
 		
-		ProjectSettings.save()
+		_save_config()
 	
 	add_autoload_singleton(AUTOLOAD_NAME, "res://addons/drawdebug3d/script/DrawDebug3D.gd")
 
 func _disable_plugin():
-	ProjectSettings.save()
+	_save_config()
 	
 	remove_autoload_singleton(AUTOLOAD_NAME)
+
+func _save_config() -> void:
+	ProjectSettings.save_custom("addons/drawdebug3d/save/override.cfg")
