@@ -94,6 +94,38 @@ func line(data: PrimitiveLineData) -> void:
 	var _mesh_instance: MeshInstance3D = _set_mesh(_buffer_instance.object, _im, Vector3.ZERO, Vector3.ZERO, data.color)
 	_set_debug_data(_buffer_instance.uid, _mesh_instance, data.lifetime)
 
+func lines(data: PrimitiveLinesData) -> void:
+	if not _debug_mode:
+		return
+	
+	var _buffer_instance: BufferData = _buffer.get_instance()
+	if not _buffer_instance: 
+		printerr("No buffer instance available")
+		return
+	
+	if data.positions.is_empty():
+		return
+	
+	if data.positions.size() < 2:
+		dot(PrimitiveDotData.new(data.positions[0], Vector3.ZERO, Vector3(0.1, 0.1, 0.1), data.color, data.lifetime))
+		return
+	
+	if data.positions.size() == 2:
+		line(PrimitiveLineData.new(data.positions[0], data.positions[1], data.color, data.lifetime))
+		return
+	
+	var _im: ImmediateMesh = ImmediateMesh.new()
+	_im.surface_begin(Mesh.PRIMITIVE_LINES)
+	for i in range(data.positions.size()):
+		_im.surface_add_vertex(data.positions[i - 1])
+		_im.surface_add_vertex(data.positions[i])
+	
+	_im.surface_set_color(data.color)
+	_im.surface_end()
+	
+	var _mesh_instance: MeshInstance3D = _set_mesh(_buffer_instance.object, _im, Vector3.ZERO, Vector3.ZERO, data.color)
+	_set_debug_data(_buffer_instance.uid, _mesh_instance, data.lifetime)
+
 func box_line(data: PrimitiveBoxLineData) -> void:
 	if not _debug_mode:
 		return
