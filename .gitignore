@@ -27,6 +27,7 @@ icon.svg.import
 project.godot
 export_presets.cfg
 .editorconfig
+override.cfg
 
 # IDE / Editor specific files (if you use them inside the plugin folder)
 .vscode/ # VS Code
