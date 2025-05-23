@@ -12,6 +12,7 @@ A lightweight Godot plugin for rendering 3D debug primitives during development.
   - Box Line
   - Dot
   - Box
+  - Capsule
   - Cylinder
   - Circle
   - Sphere
