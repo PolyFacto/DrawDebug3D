@@ -21,11 +21,11 @@ func _init_buffer() -> void:
 	if not _debug_mode:
 		return
 	
-	var buffer_size: int = ProjectSettings.get_setting("addons/DrawDebug/buffer_size")
+	var buffer_size: int = ProjectSettings.get_setting("addons/DrawDebug/buffer_size", 128.0)
 	_buffer = Buffer.new("DD3D Buffer", buffer_size)
 	add_child(_buffer)
 	
-	var instance_visibility_range: int = ProjectSettings.get_setting("addons/DrawDebug/instance_visibility_range")
+	var instance_visibility_range: int = ProjectSettings.get_setting("addons/DrawDebug/instance_visibility_range", 0.0)
 	
 	for i in range(_buffer.get_buffer_size()):
 		var _mesh_instance: MeshInstance3D = MeshInstance3D.new()
