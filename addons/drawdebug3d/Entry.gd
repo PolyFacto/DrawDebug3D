@@ -3,9 +3,10 @@ extends EditorPlugin
 
 const AUTOLOAD_NAME: String = "DrawDebug3D"
 
-func _enable_plugin():
+func _enter_tree() -> void:
 	if not ProjectSettings.has_setting("addons/DrawDebug/buffer_size"):
-		ProjectSettings.set("addons/DrawDebug/buffer_size", 128)
+		ProjectSettings.set_setting("addons/DrawDebug/buffer_size", 128)
+		ProjectSettings.set_initial_value("addons/DrawDebug/buffer_size", 128)
 		
 		ProjectSettings.add_property_info({
 			"name": "addons/DrawDebug/buffer_size",
@@ -13,11 +14,10 @@ func _enable_plugin():
 			"hint": PROPERTY_HINT_RANGE,
 			"hint_string": "128,2048,1",
 		})
-		
-		_save_config()
 	
 	if not ProjectSettings.has_setting("addons/DrawDebug/instance_visibility_range"):
-		ProjectSettings.set("addons/DrawDebug/instance_visibility_range", 0.0)
+		ProjectSettings.set_setting("addons/DrawDebug/instance_visibility_range", 0.0)
+		ProjectSettings.set_initial_value("addons/DrawDebug/instance_visibility_range", 0.0)
 		
 		ProjectSettings.add_property_info({
 			"name": "addons/DrawDebug/instance_visibility_range",
@@ -26,8 +26,9 @@ func _enable_plugin():
 			"hint_string": "0.0,2048.0,1.0",
 		})
 		
-		_save_config()
-	
+	_save_config()
+
+func _enable_plugin():
 	add_autoload_singleton(AUTOLOAD_NAME, "res://addons/drawdebug3d/script/DrawDebug3D.gd")
 
 func _disable_plugin():
