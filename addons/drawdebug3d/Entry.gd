@@ -27,6 +27,7 @@ func _enter_tree() -> void:
 		})
 		
 	_save_config()
+	print("test")
 
 func _enable_plugin():
 	add_autoload_singleton(AUTOLOAD_NAME, "res://addons/drawdebug3d/script/DrawDebug3D.gd")
